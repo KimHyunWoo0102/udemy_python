@@ -15,6 +15,8 @@ color_list=[ (213, 222, 215), (223, 211, 215), (209, 156, 94), (172, 86, 46), (2
 print(len(color_list))
 turtle=Turtle()
 turtle.penup()
+turtle.hideturtle()
+
 colormode(255)
 turtle.goto(-200,-200)
 
