@@ -1,26 +1,10 @@
 
 import time
-import random
 from turtle import *
 
 from snake import Snake
-
-# dots=[[0]*height]*width
-
-
-
-
-#def make_random_dot():
-    #dot=Turtle("circle")
-    #dot.color("green")
-    #dot.penup()
-
-    #x=int(random.random()*600-300)
-    #y=int(random.random()*600-300)
-
-    #dot.goto(x,y)
-    #dots[x][y]=dot
-
+from food import Food
+from scoreboard import ScoreBoard
 
 screen=Screen()
 
@@ -28,6 +12,7 @@ screen.setup(width=600, height=600)
 screen.bgcolor("black")
 screen.title("My Snake Game")
 screen.tracer(0)
+
 #TODO 1: make snake body
 snake=Snake()
 
@@ -38,14 +23,27 @@ screen.onkey(key="Right",fun=snake.move_right)
 screen.onkey(key="Up",fun=snake.move_up)
 screen.onkey(key="Down",fun=snake.move_down)
 
+# TODO 3 : make Food
+food=Food()
 
-while snake.check():
+score_board=ScoreBoard()
+
+isRun=True
+
+while isRun:
     screen.update()
     time.sleep(0.1)
     snake.move()
 
-    #screen.ontimer(fun=make_random_dot,t=3000)
 
-print("게임 종료!")
+    isRun = snake.check() and not snake.is_touch_body()
+
+    if food.distance(snake.get_head()) < 15:
+        food.refresh()
+        score_board.increase_score()
+        snake.extend()
+
+
+score_board.game_over()
 screen.exitonclick()
 
